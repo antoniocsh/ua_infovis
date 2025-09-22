@@ -32,10 +32,10 @@
                     // this new DataTable object holds all the data
                     var data = new google.visualization.arrayToDataTable(arrayData);
 
-                    // this view can select a subset of the data at a time
-                    var view = new google.visualization.DataView(data);
-                    view.setColumns([8, 0]);        //This line selects only columns 8 and 0 from the dataset (order matters!).
-                                                    //Column 8 will be plotted on the x-axis and column 0 on the y-axis.
+                    // // this view can select a subset of the data at a time
+                    // var view = new google.visualization.DataView(data);
+                    // view.setColumns([8, 0]);        //This line selects only columns 8 and 0 from the dataset (order matters!).
+                    // //Column 8 will be plotted on the x-axis and column 0 on the y-axis.
 
                     // set chart options
                     var options = {
@@ -45,9 +45,22 @@
                         legend: 'none'
                     };
 
+
+                    // This call will group the table by column 0 values.
+                    // It will also show column 8, which will be a sum of
+                    // values in that column for that row group.
+
+                    // Grouping of data
+                    var result = google.visualization.data.group(
+                        data,
+                        [8],
+                        [{ 'column': 0, 'aggregation': google.visualization.data.sum, 'type': 'number' }]
+                    );
+
+
                     // create the chart object and draw it
-                    var chart = new google.visualization.ScatterChart(document.getElementById('id_chart'));
-                    chart.draw(view, options);
+                    var chart = new google.visualization.ColumnChart(document.getElementById('id_chart'));
+                    chart.draw(result, options);
                 });
             }
         </script>

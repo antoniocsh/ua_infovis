@@ -56,11 +56,12 @@ function drawChart( )
 			title : 'UA - MIECT - Students by curricular year',
 			width : 800,
 			height : 600,
-			is3D: true
+            hAxis: {minValue: 0},
+            legend: 'none'
 	};
 
 	// Instantiate the pie chart.
-	var chart = new google.visualization.PieChart( document.getElementById('chart_div') );
+	var chart = new google.visualization.BarChart( document.getElementById('chart_div') );
 	debugger;
 	// Draw the chart, passing in some configuration options.
 	chart.draw(data, options);
