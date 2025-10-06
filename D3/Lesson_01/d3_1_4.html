@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>First D3 Example</title>
+    <script type="text/javascript" src="http://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // d3.select("body")
+        //     .append("p")
+        //     .text("New paragraph!");
+
+        // d3.select("body")
+        //     .append("p")
+        //     .text("Another paragraph!")
+        //     .style("color", "red");
+
+        // let dataset = [5, 10, 15, 20, 25, 30];
+
+        let dataset = [30];
+        for (var i = 0; i < 24; i++) {
+            let newNumber = Math.random() * 30;
+            dataset.push(newNumber);
+        }
+        dataset.sort(() => Math.random() - 0.5);
+        // dataset.sort((a, b) => a - b);
+        let scrambled = true;
+
+        drawbarchart();
+
+        function toggle_sorting() {
+            if (scrambled){
+                dataset.sort((a, b) => a - b);
+                b.text("Scramble");
+            } else {
+                dataset.sort(() => Math.random() - 0.5);
+                b.text("Sort");
+            }
+            drawbarchart();
+            scrambled = !scrambled;
+        }
+
+     
+        d3.select("body").style("text-align", "center");
+
+        function drawbarchart(){
+        d3.select("body").selectAll("div")
+            .data(dataset)
+            .join("div")
+            .attr("class", "bar")
+            .style("height", function (d) {
+                return (d * 5) + "px";
+            })
+            .style("margin-right", "2px")
+            .style("background-color", getRandomColor)
+        }
+        let p = d3.select("body").append("p");
+
+        p.selectAll("span")
+            .data("25 Random Numbers".split(""))
+            .enter()
+            .append("span")
+            .text(d => d)
+            .style("color", getRandomColor);
+
+        let b = d3.select("p").append("button");
+        b.text("Sort")
+        .on("click", toggle_sorting)
+        .style("margin-left", "20px")
+        .style("background-color", "lightblue")
+        .style("border-radius", "8px")
+        .style("border-color", "darkblue")
+        .style("padding", "3px 8px");
+
+        function getRandomColor() {
+            let letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 11)];
+            }
+            return color;
+        }
+
+    </script>
+</body>
+
+<style type="text/css">
+    div.bar {
+        display: inline-block;
+        width: 20px;
+        height: 75px;
+        /* Overriden by D3-assigned height on script */
+        margin-right: 2px;
+    }
+</style>
+
+</html>
