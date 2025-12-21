@@ -27,9 +27,11 @@ def main():
 
     # Create a plane
     planeSource = vtkPlaneSource()
-    planeSource.SetXResolution(10) 
-    planeSource.SetYResolution(10)
+    planeSource.SetOrigin(0, 0, 0)
+    planeSource.SetPoint1(2, 0, 0)   
+    planeSource.SetPoint2(0, 1, 0)   
     planeSource.Update()
+
 
     # Read the texture image
     jpgReader = vtkJPEGReader()
@@ -39,6 +41,7 @@ def main():
     # Create texture object
     texture = vtkTexture()
     texture.SetInputConnection(jpgReader.GetOutputPort())
+    
 
     # Create mapper and actor
     planeMapper = vtkPolyDataMapper()
@@ -46,7 +49,7 @@ def main():
 
     planeActor = vtkActor()
     planeActor.SetMapper(planeMapper)
-    planeActor.SetTexture(texture)  # Apply texture to the actor
+    planeActor.SetTexture(texture) 
 
     # Renderer, window
     ren = vtkRenderer()
